@@ -17,7 +17,7 @@ const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueO
       <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <li>
-            <article class="flex h-full flex-col border border-border border-t-0 bg-background px-8 py-10 transition hover:bg-muted/40">
+            <article class="flex h-full flex-col border border-border  bg-background px-8 py-10 transition hover:bg-muted/40">
               <a
                 href={`/posts/${post.id}/`}
                 class="flex h-full flex-col rounded-md"

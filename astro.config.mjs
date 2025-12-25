@@ -1,30 +1,37 @@
-// https://astro.build/config
-import { defineConfig } from "astro/config";
-import tailwind from "@tailwindcss/vite";
-import mdx from "@astrojs/mdx";
-import sitemap from "@astrojs/sitemap";
+// @ts-check
+import { defineConfig } from "astro/config"
+import mdx from "@astrojs/mdx"
+import sitemap from "@astrojs/sitemap"
 
-import rehypeSlug from "rehype-slug";
-import rehypePrettyCode from "rehype-pretty-code";
+import remarkGfm from "remark-gfm"
+import remarkSmartypants from "remark-smartypants"
+import rehypeSlug from "rehype-slug"
+import rehypeAutolinkHeadings from "rehype-autolink-headings"
+
+import tailwindcss from "@tailwindcss/vite"
 
 export default defineConfig({
-  site: "https://blog.thecodebrew.com",
+  site: "https://example.com",
+
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
     mdx({
-      syntaxHighlight: false,
+      syntaxHighlight: "shiki",
+      shikiConfig: {
+        theme: "github-dark",
+      },
+      remarkPlugins: [
+        remarkGfm,
+        remarkSmartypants,
+      ],
       rehypePlugins: [
         rehypeSlug,
-        [
-          rehypePrettyCode,
-          {
-            theme: "github-dark",
-          },
-        ],
+        [rehypeAutolinkHeadings, { behavior: "wrap" }],
       ],
     }),
     sitemap(),
   ],
-});
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
+})
