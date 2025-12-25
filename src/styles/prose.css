@@ -1,0 +1,87 @@
+@layer components {
+  .prose {
+    @apply text-foreground leading-relaxed;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    @apply scroll-mt-28 font-semibold tracking-tight;
+  }
+
+  .prose h1 {
+    @apply text-4xl mt-12 mb-6;
+  }
+
+  .prose h2 {
+    @apply text-2xl mt-8 mb-4;
+  }
+
+  .prose h3 {
+    @apply text-xl mt-6 mb-3;
+  }
+
+  .prose h4 {
+    @apply text-lg mt-6 mb-3;
+  }
+
+  .prose h5 {
+    @apply text-base mt-6 mb-3;
+  }
+
+  .prose h6 {
+    @apply text-sm mt-6 mb-3;
+  }
+
+  .prose p {
+    @apply my-3 text-base;
+  }
+
+  .prose a {
+    @apply underline underline-offset-4 decoration-border hover:text-muted-foreground transition;
+  }
+
+  .prose :not(pre) > code {
+    @apply rounded bg-muted px-1.5 py-0.5 text-sm font-mono;
+  }
+
+  .prose pre {
+    @apply my-8 overflow-x-auto rounded-xl border border-border p-4;
+  }
+
+  .prose blockquote {
+    @apply my-3 border-l-4 border-border pl-4 italic text-muted-foreground;
+  }
+
+  .prose ul {
+    @apply my-3 list-disc pl-6;
+  }
+
+  .prose ol {
+    @apply my-3 list-decimal pl-6;
+  }
+
+  .prose li {
+    @apply my-2;
+  }
+
+  /* Tables – horizontal + vertical lines */
+.prose table {
+  @apply my-6 w-full border-collapse text-sm;
+}
+
+.prose th,
+.prose td {
+  @apply px-3 py-2 text-left border border-border;
+}
+
+.prose th {
+  @apply font-medium text-foreground bg-muted/40;
+}
+
+.prose td {
+  @apply text-muted-foreground;
+}
+
+}

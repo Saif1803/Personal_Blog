@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets"
+import { getCollection } from "astro:content"
+
+import BaseHead from "../../components/BaseHead.astro"
+import FormattedDate from "../../components/FormattedDate.astro"
+import MainLayout from "../../layouts/MainLayout.astro"
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts"
+
+const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+---
+<MainLayout>
+  <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+
+  <main>
+    <section class="mx-auto max-w-7xl px-6 pt-8 pb-16">
+      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <li>
+            <article class="flex h-full flex-col border border-border bg-background px-8 py-10 transition hover:bg-muted/40">
+              <a
+                href={`/posts/${post.id}/`}
+                class="flex h-full flex-col rounded-md"
+              >
+                {post.data.heroImage && (
+                  <Image
+                    src={post.data.heroImage}
+                    width={600}
+                    height={400}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    alt={post.data.title}
+                    class="mb-6 rounded-md"
+                  />
+                )}
+
+                <h3 class="text-xl font-semibold tracking-tight">
+                  {post.data.title}
+                </h3>
+
+                {post.data.description && (
+                  <p class="mt-4 text-sm text-muted-foreground">
+                    {post.data.description}
+                  </p>
+                )}
+
+                <div class="flex-1" />
+
+                <div class="mt-8 flex items-center justify-between text-xs text-muted-foreground">
+                  <FormattedDate date={post.data.pubDate} />
+                  <span class="font-medium">Read →</span>
+                </div>
+              </a>
+            </article>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </main>
+</MainLayout>

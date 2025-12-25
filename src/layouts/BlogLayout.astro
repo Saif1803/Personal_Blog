@@ -1,0 +1,82 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+
+type Props = CollectionEntry<"blog">["data"];
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={"Blogs | " + title} description={description} />
+  </head>
+
+  <body class="">
+    <Header />
+
+    <main class="mx-auto max-w-7xl px-6 py-16">
+      <div class="fixed max-w-3xl mx-auto">
+        <button
+          type="button"
+          onclick="history.length > 1 ? history.back() : location.href = '/posts'"
+          class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition"
+          aria-label="Go back"
+        >
+          ← Back
+        </button>
+      </div>
+
+      <article>
+        {/* Meta + Title */}
+        <header class="mx-auto mb-12 max-w-3xl">
+          <p class="text-sm text-muted-foreground">
+            <FormattedDate date={pubDate} />
+            {
+              updatedDate && (
+                <span class="ml-2 italic">
+                  · Updated <FormattedDate date={updatedDate} />
+                </span>
+              )
+            }
+          </p>
+
+          <h1 class="mt-4 text-4xl font-semibold leading-tight tracking-tight">
+            {title}
+          </h1>
+
+          {
+            description && (
+              <p class="mt-4 text-lg text-muted-foreground">{description}</p>
+            )
+          }
+        </header>
+
+        {/* Optional hero */}
+        {
+          heroImage && (
+            <div class="mb-16">
+              <Image
+                src={heroImage}
+                width={800}
+                height={400}
+                alt=""
+                class="mx-auto rounded-xl"
+              />
+            </div>
+          )
+        }
+
+        {/* Content */}
+        <div class="prose mx-auto max-w-3xl">
+          <slot />
+        </div>
+      </article>
+    </main>
+
+    <Footer />
+  </body>
+</html>
