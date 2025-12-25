@@ -1,10 +1,10 @@
 ---
+import Hero from "@/components/Hero.astro";
 import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import MainLayout from "@/layouts/MainLayout.astro";
-
+import Why from "@/components/Why.astro";
+import Animated from "@/components/Animated.astro";
 ---
 
 <MainLayout>
@@ -12,6 +12,11 @@ import MainLayout from "@/layouts/MainLayout.astro";
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		
+		<Hero />
+		<div class="mb-10 flex justify-center">
+			<Animated />
+		</div>
+
+		<Why />
 	</body>
 </MainLayout>
