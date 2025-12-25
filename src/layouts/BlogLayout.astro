@@ -12,18 +12,18 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
 <html lang="en">
   <head>
-    <BaseHead title={"Blog | " + title} description={description} />
+    <BaseHead title={"Blogs | " + title} description={description} />
   </head>
 
   <body class="">
     <Header />
 
-    <main class="mx-auto max-w-7xl px-6 py-16">
+    <main class="mx-auto max-w-7xl px-6 py-10">
       <div class="fixed max-w-3xl mx-auto">
         <button
           type="button"
           onclick="history.length > 1 ? history.back() : location.href = '/posts'"
-          class="inline-flex sm:hidden md:block items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition"
+          class="hidden md:block items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition"
           aria-label="Go back"
         >
           ← Back
