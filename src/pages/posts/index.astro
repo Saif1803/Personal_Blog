@@ -1,58 +1,88 @@
 ---
-import { Image } from "astro:assets"
-import { getCollection } from "astro:content"
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 
-import BaseHead from "../../components/BaseHead.astro"
-import FormattedDate from "../../components/FormattedDate.astro"
-import MainLayout from "../../layouts/MainLayout.astro"
-import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts"
+import BaseHead from "../../components/BaseHead.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { getReadingTime } from "../../lib/ReadingTime";
 
-const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 ---
+
 <MainLayout>
   <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 
   <main>
     <section class="mx-auto max-w-7xl pt-8 pb-16">
       <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
-          <li>
-            <article class="flex h-full flex-col border border-border  bg-background px-8 py-10 transition hover:bg-muted/40">
-              <a
-                href={`/posts/${post.id}/`}
-                class="flex h-full flex-col rounded-md"
-              >
-                {post.data.heroImage && (
-                  <Image
-                    src={post.data.heroImage}
-                    width={600}
-                    height={400}
-                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                    alt={post.data.title}
-                    class="mb-6"
-                  />
-                )}
+        {
+          posts.map((post) => (
+            <li>
+              <article class="flex h-full flex-col border border-border bg-background px-8 py-10 transition hover:bg-muted/40">
+                <a
+                  href={`/posts/${post.id}/`}
+                  class="flex h-full flex-col rounded-md"
+                >
+                  {post.data.heroImage && (
+                    <Image
+                      src={post.data.heroImage}
+                      width={600}
+                      height={400}
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      alt={post.data.title}
+                      class="mb-6 rounded-md"
+                    />
+                  )}
 
-                <h3 class="text-xl font-semibold tracking-tight">
-                  {post.data.title}
-                </h3>
+                  <h3 class="text-xl font-semibold tracking-tight">
+                    {post.data.title}
+                  </h3>
 
-                {post.data.description && (
-                  <p class="mt-4 text-sm text-muted-foreground">
-                    {post.data.description}
-                  </p>
-                )}
+                  {post.data.description && (
+                    <p class="mt-4 text-sm text-muted-foreground">
+                      {post.data.description}
+                    </p>
+                  )}
 
-                <div class="flex-1" />
+                  <div class="flex-1" />
 
-                <div class="mt-8 flex items-center justify-between text-xs text-muted-foreground">
-                  <FormattedDate date={post.data.pubDate} />
-                  <span class="font-medium">Read →</span>
-                </div>
-              </a>
-            </article>
-          </li>
-        ))}
+                  <div class="mt-8 flex items-center justify-between text-xs text-muted-foreground">
+                    <div class="flex justify-between w-[50%] items-center gap-3">
+                      <FormattedDate date={post.data.pubDate} />
+
+                      
+                    </div>
+
+                    <span class="flex gap-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="lucide lucide-clock-icon lucide-clock"
+                        >
+                          <>
+                            <path d="M12 6v6l4 2" />
+                            <circle cx="12" cy="12" r="10" />
+                          </>
+                        </svg>
+                        {getReadingTime(post.body ?? "").minutes} min read →
+                      </span>
+                  </div>
+                </a>
+              </article>
+            </li>
+          ))
+        }
       </ul>
     </section>
   </main>
