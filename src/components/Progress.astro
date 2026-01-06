@@ -1,0 +1,72 @@
+---
+/*
+  Elite Reading Progress Indicator
+  --------------------------------
+  ✔ Fixed to top (no CLS)
+  ✔ GPU-accelerated (transform)
+  ✔ Passive scroll listener
+  ✔ Theme-aware (CSS variables)
+  ✔ Auto-hides at top
+  ✔ Zero framework hydration
+*/
+---
+
+<div id="reading-progress" aria-hidden="true"></div>
+
+<script is:inline>
+  const bar = document.getElementById("reading-progress");
+
+  let ticking = false;
+
+  const update = () => {
+    const { scrollTop, scrollHeight } = document.documentElement;
+    const viewport = window.innerHeight;
+
+    const maxScroll = scrollHeight - viewport;
+    const progress = maxScroll > 0 ? scrollTop / maxScroll : 0;
+
+    bar.style.transform = `scaleX(${progress})`;
+    bar.style.opacity = scrollTop > 8 ? "1" : "0";
+
+    ticking = false;
+  };
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+</script>
+
+<style>
+  #reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    border-radius: 4px;
+
+    background: linear-gradient(
+      90deg,
+      var(--foreground),
+      var(--foreground)
+    );
+
+    transform: scaleX(0);
+    transform-origin: left;
+    opacity: 0;
+
+    transition:
+      transform 0.12s linear,
+      opacity 0.2s ease;
+
+    z-index: 9999;
+    pointer-events: none;
+  }
+</style>
