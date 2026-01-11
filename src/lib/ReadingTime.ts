@@ -1,5 +1,5 @@
 export function getReadingTime(text: string) {
-  const WORDS_PER_MINUTE = 200;
+  const WORDS_PER_MINUTE = 100;
 
   const words = text
     .replace(/<[^>]*>/g, '') // strip HTML
