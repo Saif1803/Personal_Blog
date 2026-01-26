@@ -11,7 +11,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import tailwindcss from "@tailwindcss/vite"
 
 export default defineConfig({
-  site: "https://example.com",
+  site: "blog.saifullah.tech",
 
   integrations: [
     mdx({
