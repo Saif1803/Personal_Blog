@@ -6,7 +6,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Progress from "@/components/Progress.astro";
-import Analytics from '@vercel/analytics/astro'
+import Analytics from "@vercel/analytics/astro";
 
 type Props = CollectionEntry<"blog">["data"];
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
@@ -21,20 +21,30 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   <body class="">
     <Progress />
     <Header />
-    
 
     <main class="mx-auto max-w-7xl px-6 py-10">
       <div class="fixed max-w-3xl mx-auto">
         <button
           type="button"
           onclick="history.length > 1 ? history.back() : location.href = '/posts'"
-          class="hidden md:block items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition"
+          class="hidden flex-row md:flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition"
           aria-label="Go back"
         >
-          ← Back
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-arrow-left-icon lucide-arrow-left"
+            ><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg
+          > Back
         </button>
       </div>
-     
 
       <article>
         {/* Meta + Title */}
